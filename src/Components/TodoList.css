@@ -1,0 +1,29 @@
+table {
+  border: 1px solid green;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  border: 1px solid green;
+  padding: 5px 15px;
+}
+
+th {
+  text-align: center;
+}
+
+.request {
+  width: 200px;
+  height: 100px;
+  margin: 50px;
+  border-radius: 20px;
+  background: green;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.sort {
+  cursor: pointer;
+}
