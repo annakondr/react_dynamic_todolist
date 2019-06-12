@@ -14,7 +14,6 @@ class TodoList extends Component {
     };
     this.requestData = this.requestData.bind(this);
     this.sortList = this.sortList.bind(this)
-   // this.createData = this.createData.bind(this)
   }
 
   requestData() {
@@ -32,7 +31,7 @@ class TodoList extends Component {
           users: JSON.parse(xhrUsers.response),
           todos: JSON.parse(xhrTodo.response)
         });
-        const data = []
+        const data = [];
         this.state.todos.forEach((item) => {
           const user = this.state.users.find(one => one.id === item.userId);
           data.push(<TodoItem title={item.title} completed={item.completed}
