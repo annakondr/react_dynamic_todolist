@@ -14,6 +14,7 @@ class TodoList extends Component {
     };
     this.requestData = this.requestData.bind(this);
     this.sortList = this.sortList.bind(this)
+   // this.createData = this.createData.bind(this)
   }
 
   requestData() {
@@ -31,6 +32,15 @@ class TodoList extends Component {
           users: JSON.parse(xhrUsers.response),
           todos: JSON.parse(xhrTodo.response)
         });
+        const data = []
+        this.state.todos.forEach((item) => {
+          const user = this.state.users.find(one => one.id === item.userId);
+          data.push(<TodoItem title={item.title} completed={item.completed}
+                              userId={item.userId} user={user} key={item.id}/>)
+        });
+        this.setState({
+          completedData: data
+        });
       });
       xhrUsers.send()
     });
@@ -39,7 +49,9 @@ class TodoList extends Component {
 
   sortList() {
     this.setState((state) => ({
-      completedData: state.completedData.sort((a, b) => a.props.title.localeCompare(b.props.title))
+      completedData: state.completedData.sort((a, b) => {
+        return a.props.title.localeCompare(b.props.title)
+      })
     }))
   }
 
@@ -47,23 +59,21 @@ class TodoList extends Component {
     if (!this.state.requested) {
       return <button onClick={this.requestData} className='request'>Show the list!</button>
     } else if (this.state.loaded) {
-      this.state.todos.forEach((item) => {
-        const user = this.state.users.find(one => one.id === item.userId);
-        this.state.completedData.push(<TodoItem title={item.title} completed={item.completed} userId={item.userId} user={user} key={item.id}/>)
-      });
 
       return (
         <div>
           <table>
             <thead>
-            <tr>
-              <th onClick={this.sortList} className='sort'>ToDoItem (click to sort)</th>
-              <th>User name</th>
-              <th>Completed</th>
-            </tr>
+              <tr>
+                <th onClick={this.sortList} className='sort'>
+                  ToDoItem (click to sort)
+                </th>
+                <th>User name</th>
+                <th>Completed</th>
+              </tr>
             </thead>
             <tbody>
-            {this.state.completedData}
+              {this.state.completedData}
             </tbody>
           </table>
         </div>
